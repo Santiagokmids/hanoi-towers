@@ -8,8 +8,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Towers {
-	public final static String SAVE_PATH_FILE = "data/startTowers.tm";
-	public final static String SAVE_PATH_FILE1 = "data/endTower.tm";
+	public final static String SAVE_PATH_FILE = "data/startTowers.txt";
+	public final static String SAVE_PATH_FILE1 = "data/endTower.txt";
+	public static PrintWriter pw;
 	
 	public static ArrayList<Integer> numbers;
 	public static int starts;
@@ -17,8 +18,9 @@ public class Towers {
 	public static int ends;
 	public static int number;
 	
-	public Towers() {
+	public Towers() throws FileNotFoundException {
 		numbers = new ArrayList<Integer>();
+		pw = new PrintWriter(SAVE_PATH_FILE1);
 	}
 
 	public void importData() throws IOException{
@@ -59,12 +61,10 @@ public class Towers {
 		number = start;
 		temps = 0;
 		ends = 0; 
-		
 	}
 	
 	public void showMessage(int start, int temp, int end) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(SAVE_PATH_FILE1);
-		
+
 		if(starts == number) {
 			pw.println(starts+" "+temps+" "+ends);
 		}
@@ -74,16 +74,17 @@ public class Towers {
 			starts -= 1;
 			pw.println(starts+" "+temps+" "+ends);
 			
-			if(ends == number) {
-				pw.println(" \n");
+			if(number == numbers.get(numbers.size()-1) && ends == number) {
+				pw.close();
 			}
 		}
+		
 		else if(start == 1 && end == 2) {
 			temps += 1;
 			starts -= 1;
 			pw.println(starts+" "+temps+" "+ends);
 		}
-		if(start == 2 && end == 3) {
+		else if(start == 2 && end == 3) {
 			ends += 1;
 			temps -= 1;
 			pw.println(starts+" "+temps+" "+ends);
@@ -93,7 +94,7 @@ public class Towers {
 			starts += 1;
 			pw.println(starts+" "+temps+" "+ends);
 		}
-		if(start == 3 && end == 1) {
+		else if(start == 3 && end == 1) {
 			ends -= 1;
 			starts += 1;
 			pw.println(starts+" "+temps+" "+ends);
@@ -103,6 +104,9 @@ public class Towers {
 			ends -= 1;
 			pw.println(starts+" "+temps+" "+ends);
 		}
-		pw.close();
+		if(ends == number) {
+			pw.println();
+		}
+		
 	}
 }
