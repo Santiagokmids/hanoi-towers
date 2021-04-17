@@ -17,26 +17,16 @@ public class Main {
 	}
 
 	public void startApp() throws ClassNotFoundException, IOException {
-		boolean loadNumbers;
+
+		tower.importData();
 		
-		try {
-			loadNumbers = tower.loadData();
-		}
-		catch (ClassNotFoundException | IOException e) {
-			loadNumbers = false;
-		}
+		ArrayList<Integer> num = tower.getNumbers();
 
-		if(loadNumbers) {
-			int start = 0;
-			int temp = 0;
-			int end = 0;
-			ArrayList<Integer> num = tower.getNumbers();
+		for (int i = 1; i <= num.get(0); i++) {
 
-			for (int i = 0; i < num.size()-1; i++) {
-				start = num.get(i);
-				tower.hanoi(num.get(i),start,temp,end);
+			tower.asignNumber(num.get(i));
+			tower.hanoi(num.get(i),1,2,3);
 
-			}
 		}
 	}
 }
